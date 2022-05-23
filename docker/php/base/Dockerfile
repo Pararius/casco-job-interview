@@ -5,4 +5,5 @@ RUN install-php-extensions \
       grpc-1.44.0 \
       intl \
     ;
+
 LABEL org.opencontainers.image.source="https://github.com/Pararius/casco-job-interview"

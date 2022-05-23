@@ -30,7 +30,9 @@ jobs:
     needs: [init]
     if: needs.init.outputs.docker == 'true'
     steps:
-    - name: Publish new image
+    - name: Build image
       run: |
         docker build . -f docker/php/base/Dockerfile --tag ghcr.io/pararius/php-fpm-grpc:latest --target php
+    - name: Publish image
+      run: |
         docker push ghcr.io/pararius/php-fpm-grpc:latest
