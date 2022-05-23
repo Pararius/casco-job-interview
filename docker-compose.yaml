@@ -4,7 +4,6 @@ services:
   php:
     build:
       context: docker/php
-      target: php
     volumes:
     - ./:/app:delegated
     - ~/.composer/cache:/composer/cache:delegated

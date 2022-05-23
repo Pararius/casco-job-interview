@@ -1,0 +1,36 @@
+---
+name: Docker images
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    outputs:
+      application: ${{ steps.filter.outputs.docker }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dorny/paths-filter@v2.10.2
+      id: filter
+      with:
+        filters: |
+          docker:
+            - 'docker/**'
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [init]
+    if: needs.init.outputs.docker == 'true'
+    steps:
+    - name: Publish new image
+      run: |
+        docker build -f docker/php/base/Dockerfile --tag ghcr.io/Pararius/php-fpm-grpc:latest
+        docker push ghcr.io/Pararius/php-fpm-grpc:latest
