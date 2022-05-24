@@ -2,8 +2,7 @@ version: '3.7'
 
 services:
   php:
-    build:
-      context: docker/php
+    image: ghcr.io/pararius/casco-job-interview:latest
     volumes:
     - ./:/app:delegated
     - ~/.composer/cache:/composer/cache:delegated
