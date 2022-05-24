@@ -3,6 +3,9 @@ name: Docker images
 
 on:
   pull_request:
+    types: [closed]
+    branches:
+    - master
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
