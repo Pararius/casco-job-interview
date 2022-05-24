@@ -10,7 +10,7 @@ The code is already implemented, only not in a very object oriented way.
 
 ## Installation
 
-First make sure to install Docker and Docker Compose.
+First make sure to install [Docker](https://docs.docker.com/get-docker/).
 Then, to install everything:
 
 ```sh
