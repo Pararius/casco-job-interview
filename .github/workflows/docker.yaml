@@ -7,6 +7,9 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   init:
@@ -28,9 +31,22 @@ jobs:
     if: needs.init.outputs.docker == 'true'
     steps:
     - uses: actions/checkout@v3
-    - name: Build image
-      run: |
-        docker build . -f docker/php/base/Dockerfile --tag ghcr.io/pararius/php-fpm-grpc:latest --target php
-    - name: Publish image
-      run: |
-        docker push ghcr.io/pararius/php-fpm-grpc:latest
+    - name: Log in to the Container registry
+      uses: docker/login-action@V2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push Docker image
+      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      with:
+        file: ./docker/php/base/Dockerfile
+        context: .
+        push: true
+        tags: ghcr.io/pararius/php-fpm-grpc:latest
+#    - name: Build image
+#      run: |
+#        docker build . -f docker/php/base/Dockerfile --tag ghcr.io/pararius/php-fpm-grpc:latest --target php
+#    - name: Publish image
+#      run: |
+#        docker push ghcr.io/pararius/php-fpm-grpc:latest
