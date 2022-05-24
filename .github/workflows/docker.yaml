@@ -8,9 +8,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  DOCKER_BUILDKIT: 1
-
 jobs:
   init:
     runs-on: ubuntu-latest
@@ -32,7 +29,7 @@ jobs:
     steps:
     - name: Build image
       run: |
-        docker build . -f docker/php/base/Dockerfile --tag ghcr.io/pararius/php-fpm-grpc:latest --target php
+        docker build . -f ./docker/php/base/Dockerfile --tag ghcr.io/pararius/php-fpm-grpc:latest --target php
     - name: Publish image
       run: |
         docker push ghcr.io/pararius/php-fpm-grpc:latest
