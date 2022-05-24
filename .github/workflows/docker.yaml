@@ -40,13 +40,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
-        file: ./docker/php/base/Dockerfile
+        file: ./docker/php/Dockerfile
         context: .
         push: true
-        tags: ghcr.io/pararius/php-fpm-grpc:latest
-#    - name: Build image
-#      run: |
-#        docker build . -f docker/php/base/Dockerfile --tag ghcr.io/pararius/php-fpm-grpc:latest --target php
-#    - name: Publish image
-#      run: |
-#        docker push ghcr.io/pararius/php-fpm-grpc:latest
+        tags: ghcr.io/pararius/casco-job-interview:latest
