@@ -27,9 +27,10 @@ jobs:
     needs: [init]
     if: needs.init.outputs.docker == 'true'
     steps:
+    - uses: actions/checkout@v3
     - name: Build image
       run: |
-        docker build . -f ./docker/php/base/Dockerfile --tag ghcr.io/pararius/php-fpm-grpc:latest --target php
+        docker build . -f docker/php/base/Dockerfile --tag ghcr.io/pararius/php-fpm-grpc:latest --target php
     - name: Publish image
       run: |
         docker push ghcr.io/pararius/php-fpm-grpc:latest
